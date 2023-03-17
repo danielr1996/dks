@@ -1,0 +1,3 @@
+name: dks-virtualization
+runtime: nodejs
+description: setup dks vms on proxmox
