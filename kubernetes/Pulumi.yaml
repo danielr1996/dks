@@ -1,0 +1,3 @@
+name: dks-kubernetes
+runtime: nodejs
+description: setup dks cluster with k0s

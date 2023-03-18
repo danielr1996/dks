@@ -9,12 +9,15 @@ export type DksNodeOpts = {
     memory: pulumi.Input<number>,
     disksize: pulumi.Input<number>,
     ipaddress: pulumi.Input<string>,
+    netmask:  pulumi.Input<string>,
     gateway: pulumi.Input<string>,
     nameserver: pulumi.Input<string>,
     sshkey: pulumi.Input<string>,
 }
 export class DksNode extends pulumi.ComponentResource {
-    public vm: proxmox.vm.VirtualMachine
+    public ipaddress: pulumi.Output<string>
+    public username: pulumi.Output<string>
+
     constructor(name: string,args: DksNodeOpts, opts:ComponentResourceOptions) {
         super("dks:node", name, args, opts);
         const getImageDataStore = async(provider: any)=>{
@@ -29,7 +32,9 @@ export class DksNode extends pulumi.ComponentResource {
         }
         const node = getNodeName(opts.provider)
         const datastore = getImageDataStore(opts.provider)
-        this.vm = new proxmox.vm.VirtualMachine(name, {
+        this.ipaddress = pulumi.output(args.ipaddress)
+        this.username = pulumi.output('ubuntu')
+        new proxmox.vm.VirtualMachine(name, {
             name: args.name,
             nodeName: node,
             agent: {enabled: true},
@@ -71,7 +76,7 @@ export class DksNode extends pulumi.ComponentResource {
                 ipConfigs: [
                     {
                         ipv4: {
-                            address: args.ipaddress,
+                            address: pulumi.interpolate`${args.ipaddress}/${args.netmask}`,
                             gateway: args.gateway,
                         },
                     },

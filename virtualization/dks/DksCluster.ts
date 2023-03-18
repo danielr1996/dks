@@ -23,7 +23,7 @@ export type DksClusterOpts = {
 export class DksCluster extends pulumi.ComponentResource {
     public controlplane: DksPlane
     public dataplane: DksPlane
-
+    public name: pulumi.Output<string>
     constructor(name: string, args: DksClusterOpts, opts: ComponentResourceOptions) {
         super("dks:cluster", name, args, opts)
         
@@ -31,9 +31,13 @@ export class DksCluster extends pulumi.ComponentResource {
             const netmask = new Netmask(networkString)
             const addresses: any[] = []
             netmask.forEach((address: any) => addresses.push(address))
-            return `${addresses[count]}/${wantedCidr}`
+            return {
+                address: addresses[count],
+                netmask: wantedCidr,
+            }
         }
-
+        
+        this.name = pulumi.output(args.name)
         this.controlplane = new DksPlane(`${name}-controlplane`, {
             name: pulumi.interpolate`${args.name}-controlplane`,
             cores: args.controlplane.cores,

@@ -10,7 +10,7 @@ export type DksPlaneOpts = {
     memory: pulumi.Input<number>,
     cores: pulumi.Input<number>,
     disksize: pulumi.Input<number>,
-    ipaddressgenerator: (index: number)=>string,
+    ipaddressgenerator: (index: number)=>{address: string, netmask: string},
     gateway: pulumi.Input<string>,
     nameserver: pulumi.Input<string>,
     sshkey: pulumi.Input<string>,
@@ -25,7 +25,8 @@ export class DksPlane extends pulumi.ComponentResource {
             memory: args.memory,
             disksize: args.disksize,
             gateway: args.gateway,
-            ipaddress: args.ipaddressgenerator(index),
+            ipaddress: args.ipaddressgenerator(index).address,
+            netmask: args.ipaddressgenerator(index).netmask,
             nameserver: args.nameserver,
             sshkey: args.sshkey,
             template: args.template
