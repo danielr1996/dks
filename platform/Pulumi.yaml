@@ -1,0 +1,3 @@
+name: dks-platform
+runtime: nodejs
+description: install loadbalancer, ingress and storage for dks
