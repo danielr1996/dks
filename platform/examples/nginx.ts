@@ -3,7 +3,7 @@ import * as k8s from "@pulumi/kubernetes";
 new k8s.helm.v3.Release("nginxpublic", {
     chart: "nginx",
     version: "13.2.22",
-    namespace: "default",
+    namespace: "examples",
     name: 'nginxpublic',
     createNamespace: true,
     repositoryOpts: {
@@ -24,7 +24,7 @@ new k8s.helm.v3.Release("nginxpublic", {
 new k8s.helm.v3.Release("nginxprivate", {
     chart: "nginx",
     version: "13.2.22",
-    namespace: "default",
+    namespace: "examples",
     name: 'nginxprivate',
     createNamespace: true,
     repositoryOpts: {
