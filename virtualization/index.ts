@@ -6,16 +6,16 @@ const stack = pulumi.getStack()
 export const cluster =  new DksCluster(`dks-${stack}`,{
     name: `dks-${stack}`,
     controlplane: {
-        cores: 2,
-        memory: 2048,
-        disksize: 10,
-        count: 3,
+        cores: 4,
+        memory: 8128,
+        disksize: 15,
+        count: 1,
         template: 9000,
     },
     dataplane: {
-        cores: 2,
-        memory: 1024,
-        disksize: 10,
+        cores: 4,
+        memory: 4096,
+        disksize: 15,
         count: 3,
         template: 9000,
     },
