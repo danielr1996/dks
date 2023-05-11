@@ -1,5 +1,7 @@
 # dks
 
+> ⚠️ Since proxmox was to unstable and unpredictable for me I decided to host my cluster on hetzner and created [dke](https://github.com/danielr1996/dke), therefore this repository is deprecated
+
 dks (danis kubernetes service) is my attempt at hosting a "production-ish ready" kubernetes cluster at home using commodity hardware and opensource or at least free software.
 
 ## overview
